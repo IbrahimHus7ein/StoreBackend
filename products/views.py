@@ -19,9 +19,19 @@ class ProductView(APIView):
         serializer = ProductSerializer(queryset, many=True)
         return Response({'count':len(serializer.data), 'data':serializer.data})
 
+    
 class CategoryList(APIView):
 
     def get(self,request):
         queryset = Category.objects.all()
         serializer = CategorySerializer(queryset, many=True)
         return Response(serializer.data)
+
+
+class ProductDetails(APIView):
+
+    def get(self,request,pk):
+        product = Product.objects.filter(pk=pk)
+        serializer = ProductSerializer(product, many=True)
+        return Response(serializer.data)  
+
